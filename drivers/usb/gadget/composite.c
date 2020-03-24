@@ -638,15 +638,6 @@ static int set_config(struct usb_composite_dev *cdev,
 	unsigned		power = gadget_is_otg(gadget) ? 8 : 100;
 	int			tmp;
 
-	/*
-	 * ignore if SET_CONFIGURATION
-	 * is sent again for same config value.
-	 */
-	if (cdev->config && (cdev->config->bConfigurationValue == number)) {
-		DBG(cdev, "already in the same config with value %d\n",
-				number);
-		return 0;
-	}
 	if (number) {
 		list_for_each_entry(c, &cdev->configs, list) {
 #ifdef CONFIG_USB_ANDROID_SAMSUNG_COMPOSITE
@@ -1333,7 +1324,7 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 					cdev->desc.bcdUSB = cpu_to_le16(0x0300);
 					cdev->desc.bMaxPacketSize0 = 9;
 				} else {
-					cdev->desc.bcdUSB = cpu_to_le16(0x0210);
+					cdev->desc.bcdUSB = cpu_to_le16(0x0201);
 				}
 			}
 
